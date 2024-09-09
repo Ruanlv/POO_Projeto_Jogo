@@ -4,140 +4,56 @@ import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 public class TestaJogo {
-	public static void main(String[] args) {
-		int opcao = 0;
+
+	/**
+	 * Método para criar um vetor de jogos, seja ele um vetor com tamanho padrão ou
+	 * com um tamanho determinado pelo usuário
+	 * 
+	 * @param opcaoCriarVetor - Recebe um inteiro que será usado para escolher qual
+	 *                        contrutor usar para criar o vetor de jogos
+	 * @return Retorna um objeto da classe VetorJogo
+	 * @throws Exception Para as exceções que podem acontecer
+	 */
+	public static VetorJogo criarVetorDeJogos(int opcaoCriarVetor) throws Exception {
 		VetorJogo vetorJogos = null;
-		int opcaoCriarVetor = 0;
-		int opcaoSair = 0;
-
 		do {
-			try {
-				opcaoCriarVetor = Integer.parseInt(JOptionPane.showInputDialog(null,
-						"1 - Para criar um vetor com um tamanho padrão\n2 - Para criar um vetor com um tamanho específico",
-						"Digite o que Você Deseja", JOptionPane.QUESTION_MESSAGE));
-
-				switch (opcaoCriarVetor) {
-				case 1 -> {
-					vetorJogos = new VetorJogo();
-				}
-				case 2 -> {
-					vetorJogos = new VetorJogo(receberTamanhoVetorJogos());
-				}
-				default -> {
-					JOptionPane.showMessageDialog(null, "Digite novamente", "Criar Vetor", JOptionPane.WARNING_MESSAGE);
-				}
-				}
-			} catch (Exception ex) {
-				// Pegando a mensagem de erro;
-				String erro = ex.getMessage();
-				if (erro.contains("For input string:")) {
-					JOptionPane.showMessageDialog(null, "Inserção inválida de dados, digite novamente");
-
-				} else if (erro.contains("Cannot parse null string")) {
-					JOptionPane.showMessageDialog(null, "Fechado o sistema, aguarde", "Mensagem",
-							JOptionPane.WARNING_MESSAGE);
-					System.exit(opcao);
-				} else {
-					JOptionPane.showMessageDialog(null, "Erro: " + erro, "Erro", JOptionPane.ERROR_MESSAGE);
-				}
+			opcaoCriarVetor = Integer.parseInt(JOptionPane.showInputDialog(null,
+					"1 - Para criar um vetor com um tamanho padrão\n2 - Para criar um vetor com um tamanho específico",
+					"Digite o que Você Deseja", JOptionPane.QUESTION_MESSAGE));
+			switch (opcaoCriarVetor) {
+			case 1 -> {
+				vetorJogos = new VetorJogo();
+			}
+			case 2 -> {
+				vetorJogos = new VetorJogo(receberTamanhoVetorJogos());
+			}
+			default -> {
+				JOptionPane.showMessageDialog(null, "Digite novamente", "Criar Vetor", JOptionPane.WARNING_MESSAGE);
+			}
 			}
 		} while (opcaoCriarVetor > 2 || opcaoCriarVetor < 1);
 
-		while (true) {
-			try {
-				opcao = Integer.parseInt(JOptionPane.showInputDialog(null,
-						String.format("Digite um opção válida:%n%s", formatarMenuDeOpcoes()), "Menu",
-						JOptionPane.INFORMATION_MESSAGE));
-
-				switch (opcao) {
-				case 1 -> {
-					vetorJogos.adicionarElemento(cadastrarJogo());
-				}
-				case 2 -> {
-					vetorJogos.adicionarElemento(receberPosicaoParaOVetor(vetorJogos), vetorJogos);
-				}
-				case 3 -> {
-					if (!(vetorJogos.estaVazio())) {
-						JOptionPane.showMessageDialog(null,
-								vetorJogos.buscarElemento(receberPosicaoParaOVetor(vetorJogos)), "Elemento",
-								JOptionPane.INFORMATION_MESSAGE);
-
-					} else {
-						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
-				case 4 -> {
-					if (!(vetorJogos.estaVazio())) {
-						JOptionPane.showMessageDialog(null,
-								String.format("O jogo foi encontrado na posição %d do vetor%n",
-										vetorJogos.buscarElemento(receberNomeDoJogoParaBuscar())),
-								"Busca por Nome", JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
-				case 5 -> {
-					if (!(vetorJogos.estaVazio())) {
-						vetorJogos.removerJogo(receberPosicaoParaOVetor(vetorJogos));
-					} else {
-						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
-								JOptionPane.WARNING_MESSAGE);
-					}
-					vetorJogos.removerJogo(receberPosicaoParaOVetor(vetorJogos));
-				}
-				case 6 -> {
-					if (!(vetorJogos.estaVazio())) {
-						JOptionPane.showMessageDialog(null,
-								vetorJogos.imprimirVeiculo(receberPosicaoParaOVetor(vetorJogos)), "Jogo",
-								JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
-								JOptionPane.WARNING_MESSAGE);
-					}
-					vetorJogos.imprimirVeiculo(receberPosicaoParaOVetor(vetorJogos));
-				}
-				case 7 -> {
-					if (!(vetorJogos.estaVazio())) {
-						JOptionPane.showMessageDialog(null, String.format("Quantidade de jogos criados %d%nJogos:%n%s",
-								Jogo.getQuantidadeInstancia(), vetorJogos.toString()));
-
-					} else {
-						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
-				case 8 -> {
-					opcaoSair = JOptionPane.showConfirmDialog(null,
-							"Realmente deseja sair do sistem? Aperte sim para sair | Aparte não ou cancelar para ficar no sistema",
-							"Sair do Sistema", JOptionPane.INFORMATION_MESSAGE);
-
-					if (opcaoSair == 0) {
-						break;
-					}
-					continue;
-
-				}
-				default -> {
-					JOptionPane.showMessageDialog(null, "Opção inválida, digite novamente", "Opção Inválida",
-							JOptionPane.WARNING_MESSAGE);
-					continue;
-				}
-				}
-
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				System.out.println(ex.getMessage());
-			}
-		}
+		return vetorJogos;
 	}
 
+	/**
+	 * Método para formatar um menu de opções que será usada na manipulação dos
+	 * objetos Jogo
+	 * 
+	 * @return Retorna uma String com o menu formatado
+	 */
 	public static String formatarMenuDeOpcoes() {
 		return "1 - Cadastrar Novo Jogo\n2 - Cadastrar Novo Jogo em um posição especifica\n3 - Buscar Jogo pela posição"
-				+ "\n4 - Buscar Jogo pelo nome\n5 - Excluir Jogo\n6 - Imprimir um Jogo\n7 - Imprimir todos os Jogos\n8 - Sair";
+				+ "\n4 - Buscar Jogo pelo nome\n5 - Excluir Jogo\n6 - Imprimir um Jogo\n7 - Imprimir todos os Jogos";
 	}
 
+	/**
+	 * Método para receber um tamanho para criar o vetor da classe VetorObjeto com
+	 * um tamanho determinado pelo usuário
+	 * 
+	 * @return Retorna um valor inteiro para criar o vetor com tamanho específico
+	 * @throws Exception Para as exceções que podem acontecer
+	 */
 	public static int receberTamanhoVetorJogos() throws Exception {
 		int tamanho = 0;
 
@@ -149,18 +65,15 @@ public class TestaJogo {
 		return tamanho;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public static Jogo cadastrarJogo() throws Exception {
 		String[] dadosJogo = { "o Nome do jogo", " a Perspectiva do Jogador" };
 		int quantidadeVendas = 0;
-		// Desenvolvedora;
-		Desenvolvedora desenvolvedora = pegarDesenvolvedora();
-		// Enumerações;
-		Genero genero = pegarGeneroJogo();
-		Tema tema = pegarTemaJogo();
-		ModoDeJogo modoDeJogo = pegarModoDeJogo();
-		ClassificacaoIndicativa classificacaoIndicativa = pegarClassificacaoIndicativa();
-		// Plataforma
-		Plataforma plataforma = pegarTipoPlataforma();
 
 		for (int i = 0; i < dadosJogo.length; i++) {
 			dadosJogo[i] = JOptionPane.showInputDialog(null, String.format("Digite o %s%n", dadosJogo[i]),
@@ -171,9 +84,8 @@ public class TestaJogo {
 						"Dados do Jogo", JOptionPane.WARNING_MESSAGE);
 
 			}
-
 			if (dadosJogo[i] == null) {
-				// TODO: O programa deverá sair;
+				throw new Exception("Cannot parse null string");
 			}
 
 			if (i == dadosJogo.length - 1) {
@@ -187,14 +99,14 @@ public class TestaJogo {
 				}
 			}
 		}
-		return new Jogo(dadosJogo[0], desenvolvedora, genero, tema, modoDeJogo, classificacaoIndicativa, dadosJogo[1],
-				plataforma, quantidadeVendas);
+		return new Jogo(dadosJogo[0], pegarDesenvolvedora(), pegarGeneroJogo(), pegarTemaJogo(), pegarModoDeJogo(),
+				pegarClassificacaoIndicativa(), dadosJogo[1], pegarTipoPlataforma(), quantidadeVendas);
 	}
 
 	public static Desenvolvedora pegarDesenvolvedora() throws Exception {
-		String[] dadosDesenvolvedora = { "Nome", "Pais de Origem", "tipoDesenvolvedora" };
-		int ano = 0, mes = 0, dia = 0;
-		LocalDate dataCriacao = LocalDate.of(2018, 07, 22);
+		String[] dadosDesenvolvedora = { "Nome", "Pais de Origem", "Tipo" };
+		int ano = 1, mes = 1, dia = 1;
+		LocalDate dataCriacao = null;
 
 		for (int i = 0; i < dadosDesenvolvedora.length; i++) {
 			dadosDesenvolvedora[i] = JOptionPane.showInputDialog(null,
@@ -208,7 +120,7 @@ public class TestaJogo {
 			}
 
 			if (dadosDesenvolvedora[i] == null) {
-				// TODO: O programa deverá sair;
+				throw new Exception("Cannot parse null string");
 			}
 
 			if (i == dadosDesenvolvedora.length - 1) {
@@ -226,7 +138,7 @@ public class TestaJogo {
 				} while (ano < 0 || mes < 0 || mes > 12 || dia < 0 || dia > 31);
 			}
 
-			// dataCriacao = LocalDate.of(ano, mes, dia);
+			dataCriacao = LocalDate.of(ano, mes, dia);
 		}
 		return new Desenvolvedora(dadosDesenvolvedora[0], dadosDesenvolvedora[1], dadosDesenvolvedora[2], dataCriacao);
 	}
@@ -239,8 +151,12 @@ public class TestaJogo {
 	 * @throws Exception Para as exceções que podem acontecer
 	 */
 	public static Genero pegarGeneroJogo() throws Exception {
-		Genero genero = (Genero) JOptionPane.showInputDialog(null, "Gêneros disponíveis:", "Escolha um Gênero",
-				JOptionPane.INFORMATION_MESSAGE, null, Genero.values(), Genero.values());
+		Genero genero;
+
+		do {
+			genero = (Genero) JOptionPane.showInputDialog(null, "Gêneros disponíveis:", "Escolha um Gênero",
+					JOptionPane.INFORMATION_MESSAGE, null, Genero.values(), Genero.values());
+		} while (genero == null);
 
 		return genero;
 	}
@@ -253,8 +169,11 @@ public class TestaJogo {
 	 * @throws Exception Para as exceções que podem acontecer
 	 */
 	public static Tema pegarTemaJogo() throws Exception {
-		Tema tema = (Tema) JOptionPane.showInputDialog(null, "Temas disponíveis", "Escolha um Tema",
-				JOptionPane.INFORMATION_MESSAGE, null, Tema.values(), Tema.values());
+		Tema tema;
+		do {
+			tema = (Tema) JOptionPane.showInputDialog(null, "Temas disponíveis", "Escolha um Tema",
+					JOptionPane.INFORMATION_MESSAGE, null, Tema.values(), Tema.values());
+		} while (tema == null);
 
 		return tema;
 	}
@@ -267,9 +186,13 @@ public class TestaJogo {
 	 * @throws Exception Para as exceções que podem acontecer
 	 */
 	public static ModoDeJogo pegarModoDeJogo() throws Exception {
-		ModoDeJogo modoDeJogo = (ModoDeJogo) JOptionPane.showInputDialog(null, "Modos de jogos disponíveis",
-				"Escolha uma Modo de Jogo", JOptionPane.INFORMATION_MESSAGE, null, ModoDeJogo.values(),
-				ModoDeJogo.values());
+		ModoDeJogo modoDeJogo;
+
+		do {
+			modoDeJogo = (ModoDeJogo) JOptionPane.showInputDialog(null, "Modos de jogos disponíveis",
+					"Escolha uma Modo de Jogo", JOptionPane.INFORMATION_MESSAGE, null, ModoDeJogo.values(),
+					ModoDeJogo.values());
+		} while (modoDeJogo == null);
 
 		return modoDeJogo;
 	}
@@ -282,16 +205,21 @@ public class TestaJogo {
 	 * @throws Exception Para as exceções que podem acontecer
 	 */
 	public static ClassificacaoIndicativa pegarClassificacaoIndicativa() throws Exception {
-		ClassificacaoIndicativa classificacaoIndicativa = (ClassificacaoIndicativa) JOptionPane.showInputDialog(null,
-				"Classificação Indicativa:", "Escolha uma Classificação Indicativa", JOptionPane.INFORMATION_MESSAGE,
-				null, ClassificacaoIndicativa.values(), ClassificacaoIndicativa.values());
+		ClassificacaoIndicativa classificacaoIndicativa;
+
+		do {
+			classificacaoIndicativa = (ClassificacaoIndicativa) JOptionPane.showInputDialog(null,
+					"Classificação Indicativa:", "Escolha uma Classificação Indicativa",
+					JOptionPane.INFORMATION_MESSAGE, null, ClassificacaoIndicativa.values(),
+					ClassificacaoIndicativa.values());
+		} while (classificacaoIndicativa == null);
 
 		return classificacaoIndicativa;
 	}
 
 	public static Plataforma pegarTipoPlataforma() {
 		String tipoPlataforma, subPlataforma;
-		boolean subPlataformaResultado;
+		boolean subPlataformaResultado = false;
 
 		tipoPlataforma = JOptionPane.showInputDialog(null,
 				"Digite se o jogo é multi-plataforma ou a plataforma que o jogo roda:", "Plataforma",
@@ -302,21 +230,23 @@ public class TestaJogo {
 					JOptionPane.WARNING_MESSAGE);
 		}
 
-		subPlataforma = JOptionPane.showInputDialog(null, "O jogo tem subversões, digite Sim ou Não?", "Plataforma",
-				JOptionPane.INFORMATION_MESSAGE);
+		do {
 
-		while (!(subPlataforma.equalsIgnoreCase("SIM")) || (subPlataforma.equalsIgnoreCase("NÃO"))
-				|| subPlataforma.isEmpty()) {
-			subPlataforma = JOptionPane.showInputDialog(null,
-					"Valor inválido, digite sim se jogo tiver subversões ou não caso ele não tenha", "Plataforma",
-					JOptionPane.WARNING_MESSAGE);
-		}
+			subPlataforma = JOptionPane.showInputDialog(null, "O jogo tem subversões, digite Sim ou Não?", "Plataforma",
+					JOptionPane.INFORMATION_MESSAGE);
 
-		if (subPlataforma.equalsIgnoreCase("SIM")) {
-			subPlataformaResultado = true;
-		} else {
-			subPlataformaResultado = false;
-		}
+			if (subPlataforma.equalsIgnoreCase("Sim")) {
+				subPlataformaResultado = true;
+				break;
+
+			} else if (subPlataforma.equals("Não") || subPlataforma.equals("Nao")) {
+				subPlataformaResultado = false;
+				break;
+
+			} else {
+				subPlataforma = "";
+			}
+		} while (subPlataforma.isEmpty());
 
 		return new Plataforma(tipoPlataforma, subPlataformaResultado);
 	}
@@ -346,5 +276,126 @@ public class TestaJogo {
 					"Procurar Jogo por Nome", JOptionPane.WARNING_MESSAGE);
 		}
 		return nome;
+	}
+
+	// Método Main;
+	public static void main(String[] args) {
+		int opcao = -1, opcaoCriarVetor = 0, opcaoSair = 0;
+		VetorJogo vetorJogos = null;
+
+		while (true) {
+			try {
+				if (opcao == -1) {
+					vetorJogos = criarVetorDeJogos(opcaoCriarVetor);
+					opcao = 0;
+				}
+				opcao = Integer.parseInt(JOptionPane.showInputDialog(null,
+						String.format("Digite um opção válida:%n%s", formatarMenuDeOpcoes()), "Menu",
+						JOptionPane.INFORMATION_MESSAGE));
+
+				switch (opcao) {
+				// Adicionar jogos ao vetor;
+				case 1 -> {
+					vetorJogos.adicionarElemento(cadastrarJogo());
+				}
+				// Adicionar jogos ao vetor em uma posição específica;
+				case 2 -> {
+					vetorJogos.adicionarElemento(receberPosicaoParaOVetor(vetorJogos), vetorJogos);
+				}
+				// Buscar elemento por posição;
+				case 3 -> {
+					if (!(vetorJogos.estaVazio())) {
+						JOptionPane.showMessageDialog(null,
+								vetorJogos.buscarElemento(receberPosicaoParaOVetor(vetorJogos)), "Elemento",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				// Buscar elemento por nome
+				case 4 -> {
+					if (!(vetorJogos.estaVazio())) {
+						JOptionPane.showMessageDialog(null,
+								String.format("O jogo foi encontrado na posição %d do vetor%n",
+										vetorJogos.buscarElemento(receberNomeDoJogoParaBuscar())),
+								"Busca por Nome", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				// Remover jogo em uma determinada posição;
+				case 5 -> {
+					if (!(vetorJogos.estaVazio())) {
+						vetorJogos.removerJogo(receberPosicaoParaOVetor(vetorJogos));
+						
+						JOptionPane.showMessageDialog(null, "Dado excluído com sucesso", "Remover Jogo",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				// Imprimir um jogo específico;
+				case 6 -> {
+					if (!(vetorJogos.estaVazio())) {
+						JOptionPane.showMessageDialog(null,
+								vetorJogos.imprimirElemento(receberPosicaoParaOVetor(vetorJogos)), "Jogo",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				// Imprimir todos os jogos;
+				case 7 -> {
+					if (!(vetorJogos.estaVazio())) {
+						JOptionPane.showMessageDialog(null, String.format(
+								"Quantidade de jogos criados: %d%nComprimento total do vetor: %d%nQuantidade de elementos no vetor: %d%n%n%s",
+								Jogo.getQuantidadeInstancia(), vetorJogos.getComprimento(), vetorJogos.getTamanho(),
+								vetorJogos.toString()));
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Mensagem",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				default -> {
+					JOptionPane.showMessageDialog(null, "Opção inválida, digite novamente", "Opção Inválida",
+							JOptionPane.WARNING_MESSAGE);
+					continue;
+				}
+				}
+
+			} catch (Exception ex) {
+				// Pegando a mensagem de erro;
+				String erro = ex.getMessage();
+
+				if (erro.contains("For input string:")) {
+					JOptionPane.showMessageDialog(null, "Inserção inválida de dados, digite novamente");
+
+				} else if (erro.contains("Cannot parse null string")) {
+					opcaoSair = JOptionPane.showConfirmDialog(null,
+							"Realmente deseja sair do sistem? Aperte sim para sair | Aparte não ou cancelar para ficar no sistema",
+							"Sair do Sistema", JOptionPane.INFORMATION_MESSAGE);
+				
+					if (opcaoSair == 0) {
+						JOptionPane.showMessageDialog(null, "Fechado o sistema, aguarde", "Mensagem",
+								JOptionPane.WARNING_MESSAGE);
+						System.exit(0);
+					}
+					continue;
+				
+				} else if (vetorJogos.estaVazio()) {
+					JOptionPane.showMessageDialog(null, "Não há jogos salvos", "Erro", JOptionPane.ERROR_MESSAGE);
+				
+				} else {
+					JOptionPane.showMessageDialog(null, "Erro: " + erro, "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+				// TODO: Analisar as exceções, depois remover o System.out.println();
+				System.out.println(ex.getMessage());
+			}
+		}
 	}
 }

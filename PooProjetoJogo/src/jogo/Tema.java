@@ -1,7 +1,7 @@
 package jogo;
 
 public enum Tema {
-	
+	// Instâncias
 	ACTION("Ação"),
 	BUSINESS("Negócios"),
 	COMEDY("Comédia"),
@@ -24,11 +24,23 @@ public enum Tema {
 	THRILLER("Thriller"),
 	WARFACE("Warface");
 	
+	// Atributo;
 	private String tema;
+	
+	/**
+	 * Método construtor para as instâncias da enumeração
+	 * 
+	 * @param tema - Valor da enumeração
+	 */
 	private Tema(String tema) {
 		this.tema = tema;
 	}
 	
+	/**
+	 * Método para pegar o valor salvo na enumeração
+	 * 
+	 * @return Retorna o valor salvo;
+	 */
 	public String getTema() {
 		return tema;
 	}
