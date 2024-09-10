@@ -1,6 +1,7 @@
 package jogo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Desenvolvedora {
 	// Atributos;
@@ -81,11 +82,21 @@ public class Desenvolvedora {
 	}
 
 	/**
+	 * Método para formatar a data de criação da desenvolvedora
+	 * 
+	 * @return Retorna a data formatada
+	 */
+	private String formatarData() {
+		String dataFormatada = this.dataCriacao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		return dataFormatada;
+	}
+
+	/**
 	 * Método para formatar a impressão dos objetos
 	 */
 	@Override
 	public String toString() {
 		return "Desenvolvedora: " + nome + ", Pais: " + paisDeOrigem + ", tipoDesenvolvedora:" + tipoDesenvolvedora
-				+ ", Criação" + dataCriacao;
+				+ ", Criação: " + this.formatarData();
 	}
 }

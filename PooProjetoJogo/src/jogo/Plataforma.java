@@ -3,7 +3,7 @@ package jogo;
 public class Plataforma {
 	// Atributos
 	private String tipo;
-	private boolean subversao;
+	private boolean versaoAlternativa;
 
 	/**
 	 * Método construtor para a criação de novos objetos com valores definidos pelo
@@ -13,9 +13,9 @@ public class Plataforma {
 	 * @param subversao - Recebe true, caso o jogo tenha subversões ou false, caso
 	 *                  ele não tenha
 	 */
-	public Plataforma(String tipo, boolean subversao) {
+	public Plataforma(String tipo, boolean versaoAlternativa) {
 		this.tipo = tipo;
-		this.subversao = subversao;
+		this.versaoAlternativa = versaoAlternativa;
 	}
 
 	/**
@@ -41,8 +41,8 @@ public class Plataforma {
 	 * 
 	 * @return Retorna o estado da subversao
 	 */
-	public boolean isSubversao() {
-		return subversao;
+	public boolean isVersaoAlternativa() {
+		return versaoAlternativa;
 	}
 
 	/**
@@ -50,22 +50,25 @@ public class Plataforma {
 	 * 
 	 * @param subversao - Recebe o novo estado da subversao
 	 */
-	public void setSubversao(boolean subversao) {
-		this.subversao = subversao;
+	public void setVersaoAlternativa(boolean versaoAlternativa) {
+		this.versaoAlternativa = versaoAlternativa;
 	}
 
 	/**
-	 * Método para verificar se a subversao é true ou false. Esse método é usado
-	 * dentro do toString
+	 * Método para verificar se o versaoAlternativa é true ou false. A versão
+	 * alternativa é usada para verificar se o jogo tem outras versões do mesmo
+	 * jogo. Exemplos: Minecraft Java (Original) e Minecraft Bedrock (versão
+	 * alternativa), ambos são Minecraft com alguns diferenças entre si, mas a sua
+	 * estrutura é a mesma.
 	 * 
-	 * @return Retorna uma String com uma mensagem dizendo se o jogo tem subversões
+	 * @return Retorna uma String com uma mensagem dizendo se o jogo tem alguma versão alternativa ou não
 	 *         ou não
 	 */
-	private String subVersao() {
-		if (this.subversao) {
-			return "O jogo tem subversões";
+	private String versaoAlternativa() {
+		if (this.versaoAlternativa) {
+			return "O jogo tem versões alternativas";
 		}
-		return "O jogo não tem subversões";
+		return "O jogo não tem versões alternativas";
 	}
 
 	/**
@@ -73,6 +76,6 @@ public class Plataforma {
 	 */
 	@Override
 	public String toString() {
-		return "tipo=" + tipo + ", subversao=" + subVersao();
+		return "Tipo: " + tipo + ", Subversão: " + versaoAlternativa();
 	}
 }

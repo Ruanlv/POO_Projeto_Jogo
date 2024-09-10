@@ -168,8 +168,6 @@ public final class VetorJogo {
 		if (posicao >= 0 && posicao < this.comprimento - 1) {
 			StringBuilder s = new StringBuilder();
 			s.append(this.elementos[posicao]);
-			s.append("\n");
-
 			return s.toString();
 		} else {
 			throw new Exception("Elementro não encontrado");

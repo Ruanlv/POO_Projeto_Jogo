@@ -209,8 +209,8 @@ public class Jogo {
 	 */
 	@Override
 	public String toString() {
-		return "Jogo: " + nome + ", " + desenvolvedora + ", " + genero + ", " + temaJogo + ", " + modoDejogo + ", "
-				+ classificacaoIndicativa + ", perspectivaJogador=" + perspectivaJogador + ", " + plataforma
-				+ ", quantidadeVendas=" + quantidadeVendas;
+		return "Jogo: " + nome + ", " + desenvolvedora + ",\n " + genero.getNome() + ", " + temaJogo.getTema() + ", "
+				+ modoDejogo.getModo() + ", " + classificacaoIndicativa.getClassificacao() + ",\n Perspectiva: "
+				+ perspectivaJogador + ", " + plataforma + ",\n Quantidade de Vendas: " + quantidadeVendas;
 	}
 }
