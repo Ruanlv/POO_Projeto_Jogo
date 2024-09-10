@@ -1,4 +1,4 @@
-## Atividade 1 POO – Modelagem de Classe 💻
+## Primeira ADO de Programação Orientada a Objetos (POO) – Modelagem de Classes 💻
 <p align="justify">Repositório para o controle das versões do projeto PooProjetoJogo. A atividade consiste em escolher um tema, modelar o diagrama de classes e codificar em JAVA, 
 seguindo os requisitos abaixo:</p>  
  
