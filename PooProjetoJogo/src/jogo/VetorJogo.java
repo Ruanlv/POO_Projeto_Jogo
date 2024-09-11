@@ -52,7 +52,7 @@ public final class VetorJogo {
 	 * @return Retorna true se o vetor estiver vazio ou false caso ele tenha
 	 *         elementos
 	 */
-	public boolean estaVazio() {
+	public boolean estaVazia() {
 		return tamanho == 0;
 	}
 
@@ -92,6 +92,11 @@ public final class VetorJogo {
 	 * @throws Exception Para as execeções que podem ocorrer
 	 */
 	public void adicionarElemento(int posicao, Object elemento) throws Exception {
+		if (posicao >= this.comprimento) {
+			throw new Exception(
+					"Não é possível adicionar um elemento nesta posição, pois ela está fora dos limites do vetor");
+		}
+
 		if (posicao >= 0 && posicao < this.comprimento) {
 			for (int i = this.tamanho - 1; i >= posicao; i--) {
 				this.elementos[i + 1] = this.elementos[i];
@@ -111,6 +116,10 @@ public final class VetorJogo {
 	 * @throws Exception Para as execeções que podem ocorrer
 	 */
 	public Object buscarElemento(int posicao) throws Exception {
+		if (this.estaVazia()) {
+			throw new Exception("Não é possível realizar a busca se o vetor estiver vazio");
+		}
+
 		if (posicao >= 0 && posicao < tamanho) {
 			return this.elementos[posicao];
 		} else {
@@ -126,6 +135,10 @@ public final class VetorJogo {
 	 * @throws Exception Para as execeções que podem ocorrer
 	 */
 	public int buscarElemento(String elemento) throws Exception {
+		if (this.estaVazia()) {
+			throw new Exception("Não é possível realizar a busca se o vetor estiver vazio");
+		}
+
 		for (int i = 0; i < this.elementos.length; i++) {
 			Jogo jogo = (Jogo) this.elementos[i];
 
@@ -138,6 +151,69 @@ public final class VetorJogo {
 			}
 		}
 		throw new Exception("Não foi possível encontrar esse Jogo");
+	}
+
+	/**
+	 * Método para buscar o jogo mais vendido da lista
+	 * 
+	 * @return Retorna uma String formatada com alguns dados do jogo mais vendido
+	 * @throws Exception Para as exceções que podem acontencer
+	 */
+	public String buscarJogoMaisVendido() throws Exception {
+		int maior = Integer.MIN_VALUE;
+		Jogo jogoResultado = null;
+
+		if (this.estaVazia()) {
+			throw new Exception("Não é possível buscar o jogo mais vendido, pois o vetor está vazio");
+		}
+
+		for (int i = 0; i < this.elementos.length; i++) {
+			Jogo jogo = (Jogo) this.elementos[i];
+
+			if (jogo == null || jogo.getQuantidadeVendas() == 0) {
+				continue;
+			}
+
+			if (jogo.getQuantidadeVendas() > maior) {
+				jogoResultado = jogo;
+				maior = jogo.getQuantidadeVendas();
+			}
+		}
+		return (jogoResultado == null ? "Você não cadastrou jogos pagos"
+				: String.format("O jogo %s teve um total de %d vendas", jogoResultado.getNome(),
+						jogoResultado.getQuantidadeVendas()));
+	}
+
+	/**
+	 * Método para buscar o jogo menos vendido da lista
+	 * 
+	 * @return Retorna uma String formatada com alguns dados do jogo menos vendido
+	 * @throws Exception Para as exceções que podem acontecer
+	 */
+	public String buscarJogoMenosVendido() throws Exception {
+		int menor = Integer.MAX_VALUE;
+		Jogo jogoResultado = null;
+
+		if (this.estaVazia()) {
+			throw new Exception("Não é possível buscar o jogo menos vendido, pois o vetor está vazio");
+		}
+
+		for (int i = 0; i < this.elementos.length; i++) {
+			Jogo jogo = (Jogo) this.elementos[i];
+
+			if (jogo == null || jogo.getQuantidadeVendas() == 0) {
+				continue;
+			}
+
+			if (jogo.getQuantidadeVendas() < menor) {
+				jogoResultado = jogo;
+				menor = jogo.getQuantidadeVendas();
+			}
+		}
+
+		return (jogoResultado == null ? "Você não cadastrou jogos pagos"
+				: String.format("O jogo mais vendido é %s ele teve um total de %d vendas", jogoResultado.getNome(),
+						jogoResultado.getQuantidadeVendas()));
 	}
 
 	/**
@@ -166,9 +242,13 @@ public final class VetorJogo {
 	 */
 	public String imprimirElemento(int posicao) throws Exception {
 		if (posicao >= 0 && posicao < this.comprimento - 1) {
+			if (this.elementos[posicao] == null) {
+				return "Sem jogo";
+			}
 			StringBuilder s = new StringBuilder();
 			s.append(this.elementos[posicao]);
 			return s.toString();
+
 		} else {
 			throw new Exception("Elementro não encontrado");
 		}
@@ -186,7 +266,7 @@ public final class VetorJogo {
 				continue;
 			}
 			s.append(obj);
-			s.append(", ");
+			s.append("\n");
 			s.append("\n");
 		}
 		return s.toString();

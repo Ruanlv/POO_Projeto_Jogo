@@ -12,7 +12,8 @@ public class TestaJogo {
 	 */
 	public static String formatarMenuDeOpcoes() {
 		return "1 - Cadastrar Novo Jogo\n2 - Cadastrar Novo Jogo em um posição especifica\n3 - Buscar Jogo pela posição"
-				+ "\n4 - Buscar Jogo pelo nome\n5 - Excluir Jogo\n6 - Imprimir um Jogo\n7 - Imprimir todos os Jogos";
+				+ "\n4 - Buscar Jogo pelo nome\n5 - Buscar o Jogo mais Vendido\n6 - Buscar o Jogo menos Vendido"
+				+ "\n7 - Excluir Jogo\n8 - Imprimir um Jogo\n9 - Imprimir todos os Jogos";
 	}
 
 	// Método Main;
@@ -46,11 +47,11 @@ public class TestaJogo {
 				}
 				// Adicionar jogos ao vetor em uma posição específica;
 				case 2 -> {
-					vetorJogos.adicionarElemento(ServicoJogo.receberPosicaoParaOVetor(vetorJogos), vetorJogos);
+					vetorJogos.adicionarElemento(ServicoJogo.receberPosicaoParaOVetor(vetorJogos), ServicoJogo.cadastrarJogo());
 				}
 				// Buscar elemento por posição;
 				case 3 -> {
-					if (!(vetorJogos.estaVazio())) {
+					if (!(vetorJogos.estaVazia())) {
 						JOptionPane.showMessageDialog(null,
 								vetorJogos.buscarElemento(ServicoJogo.receberPosicaoParaOVetor(vetorJogos)), "Elemento",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -61,7 +62,7 @@ public class TestaJogo {
 				}
 				// Buscar elemento por nome
 				case 4 -> {
-					if (!(vetorJogos.estaVazio())) {
+					if (!(vetorJogos.estaVazia())) {
 						JOptionPane.showMessageDialog(null,
 								String.format("O jogo foi encontrado na posição %d do vetor%n",
 										vetorJogos.buscarElemento(ServicoJogo.receberNomeDoJogoParaBuscar())),
@@ -71,9 +72,21 @@ public class TestaJogo {
 								JOptionPane.WARNING_MESSAGE);
 					}
 				}
-				// Remover jogo em uma determinada posição;
+				// Buscar o jogo mais vendido
 				case 5 -> {
-					if (!(vetorJogos.estaVazio())) {
+					JOptionPane.showMessageDialog(null, vetorJogos.buscarJogoMaisVendido(), "Busca o Jogo mais Vendido",
+							JOptionPane.INFORMATION_MESSAGE);
+
+				}
+				// Buscar o jogo menos vendido
+				case 6 -> {
+					JOptionPane.showMessageDialog(null, vetorJogos.buscarJogoMenosVendido(),
+							"Busca o Jogo menos Vendido", JOptionPane.INFORMATION_MESSAGE);
+
+				}
+				// Remover jogo em uma determinada posição;
+				case 7 -> {
+					if (!(vetorJogos.estaVazia())) {
 						vetorJogos.removerJogo(ServicoJogo.receberPosicaoParaOVetor(vetorJogos));
 
 						JOptionPane.showMessageDialog(null, "Dado excluído com sucesso", "Remover Jogo",
@@ -84,8 +97,8 @@ public class TestaJogo {
 					}
 				}
 				// Imprimir um jogo específico;
-				case 6 -> {
-					if (!(vetorJogos.estaVazio())) {
+				case 8 -> {
+					if (!(vetorJogos.estaVazia())) {
 						JOptionPane.showMessageDialog(null,
 								vetorJogos.imprimirElemento(ServicoJogo.receberPosicaoParaOVetor(vetorJogos)), "Jogo",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -95,8 +108,8 @@ public class TestaJogo {
 					}
 				}
 				// Imprimir todos os jogos;
-				case 7 -> {
-					if (!(vetorJogos.estaVazio())) {
+				case 9 -> {
+					if (!(vetorJogos.estaVazia())) {
 						JOptionPane.showMessageDialog(null, String.format(
 								"Quantidade de jogos criados: %d%nComprimento total do vetor: %d%nQuantidade de elementos no vetor: %d%n%n%s",
 								Jogo.getQuantidadeInstancia(), vetorJogos.getComprimento(), vetorJogos.getTamanho(),
@@ -145,8 +158,9 @@ public class TestaJogo {
 					continue;
 
 					// Caso o vetor de jogos não tenha elementos cadastrados;
-				} else if (vetorJogos.estaVazio()) {
-					JOptionPane.showMessageDialog(null, "Não há jogos salvos", "Erro", JOptionPane.ERROR_MESSAGE);
+				} else if (vetorJogos.estaVazia()) {
+					JOptionPane.showMessageDialog(null, "Não há jogos cadastrados", "Erro",
+							JOptionPane.WARNING_MESSAGE);
 
 					// Se a exceção não for igual a nenhuma outra listada acima
 				} else {

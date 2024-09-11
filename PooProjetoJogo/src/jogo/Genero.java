@@ -43,6 +43,6 @@ public enum Genero {
 	 * @return Retorna o valor salvo;
 	 */
 	public String getNome() {
-		return genero;
+		return String.format("Gênero: %s", this.genero);
 	}
 }

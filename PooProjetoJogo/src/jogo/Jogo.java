@@ -1,7 +1,7 @@
 package jogo;
 
 public class Jogo {
-	// Atributos;
+	// Atributos dos objetos;
 	private String nome;
 	private Desenvolvedora desenvolvedora;
 	private Genero genero;
@@ -11,6 +11,7 @@ public class Jogo {
 	private String perspectivaJogador;
 	private Plataforma plataforma;
 	private int quantidadeVendas;
+	// Atributo da classe;
 	private static int quantidadeInstancia = 0;
 
 	/**
@@ -205,12 +206,29 @@ public class Jogo {
 	}
 
 	/**
+	 * Método para formatar a saida da informação de vendas do jogo, ou informa que
+	 * o jogo não tem quantidade de vendas por ser gratuíto
+	 * 
+	 * @return Retorna uma String formatada com informações da quantidade de vendas,
+	 *         ou caso o jogo seja gratuíto uma mensagem dizem que o jogo não tem
+	 *         essa informação
+	 * 
+	 */
+	private String formatarInformacaoPreco() {
+		if (this.quantidadeVendas == 0) {
+			return "O jogo não tem informações de preço, pois ele é gratuito";
+		}
+		return String.format("Total de vendas: %d", this.quantidadeVendas);
+	}
+
+	/**
 	 * Método para formatar a impressão dos objetos
 	 */
 	@Override
 	public String toString() {
-		return "Jogo: " + nome + ", " + desenvolvedora + ",\n " + genero.getNome() + ", " + temaJogo.getTema() + ", "
-				+ modoDejogo.getModo() + ", " + classificacaoIndicativa.getClassificacao() + ",\n Perspectiva: "
-				+ perspectivaJogador + ", " + plataforma + ",\n Quantidade de Vendas: " + quantidadeVendas;
+		return "Jogo: " + this.nome + ", Perspectiva: " + this.perspectivaJogador + ", Quantidade de Vendas: "
+				+ this.formatarInformacaoPreco() + "\n" + desenvolvedora + "\n" + genero.getNome() + ", "
+				+ temaJogo.getTema() + ", " + modoDejogo.getModo() + "\n" + classificacaoIndicativa.getClassificacao()
+				+ "\n" + plataforma;
 	}
 }

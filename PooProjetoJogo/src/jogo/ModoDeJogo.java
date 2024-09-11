@@ -27,6 +27,6 @@ public enum ModoDeJogo {
 	 * @return Retorna o valor salvo;
 	 */
 	public String getModo() {
-		return modo;
+		return String.format("Modo de Jogo: %s", this.modo);
 	}
 }

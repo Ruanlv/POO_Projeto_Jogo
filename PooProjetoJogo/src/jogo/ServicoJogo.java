@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-public class ServicoJogo {
+public final class ServicoJogo {
 	/**
 	 * Método para criar um vetor de jogos, seja ele um vetor com tamanho padrão ou
 	 * com um tamanho determinado pelo usuário

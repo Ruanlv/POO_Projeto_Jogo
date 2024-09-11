@@ -27,6 +27,6 @@ public enum ClassificacaoIndicativa {
 	 * @return Retorna o valor salvo;
 	 */
 	public String getClassificacao() {
-		return classificacao;
+		return String.format("Classificação Indicativa: %s", this.classificacao);
 	}
 }

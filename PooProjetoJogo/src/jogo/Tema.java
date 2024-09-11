@@ -42,7 +42,7 @@ public enum Tema {
 	 * @return Retorna o valor salvo;
 	 */
 	public String getTema() {
-		return tema;
+		return String.format("Tema: %s", this.tema);
 	}
 	
 }
