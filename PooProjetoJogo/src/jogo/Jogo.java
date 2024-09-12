@@ -216,7 +216,7 @@ public class Jogo {
 	 */
 	private String formatarInformacaoPreco() {
 		if (this.quantidadeVendas == 0) {
-			return "O jogo não tem informações de preço, pois ele é gratuito";
+			return "O jogo não tem informações de vendas, pois ele é gratuito";
 		}
 		return String.format("Total de vendas: %d", this.quantidadeVendas);
 	}
